@@ -14,7 +14,7 @@ variable "region" {
 variable "volume_source" {
   description = "The name of the volume to request"
   type        = string
-  default     = "prod-volume-data1-1"
+  default     = "volume-prometheus"
 }
 
 # Prometheus
@@ -102,7 +102,7 @@ variable "use_host_volume" {
   default     = false
 }
 
-variable "version" {
+variable "pm_version" {
   description = "Prometheus version"
   type        = string
   default     = "2.41.0"

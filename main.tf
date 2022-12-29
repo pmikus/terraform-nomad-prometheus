@@ -4,7 +4,7 @@ locals {
     [
       "https://github.com",
       "/prometheus/prometheus/releases/download/",
-      "v${var.version}/prometheus-${var.version}.linux-amd64.tar.gz"
+      "v${var.pm_version}/prometheus-${var.pm_version}.linux-amd64.tar.gz"
     ]
   )
 }
@@ -34,7 +34,7 @@ resource "nomad_job" "nomad_job_prometheus" {
       vault_kv_path             = var.vault_secret.vault_kv_path,
       vault_kv_field_access_key = var.vault_secret.vault_kv_field_access_key,
       vault_kv_field_secret_key = var.vault_secret.vault_kv_field_secret_key,
-      version                   = var.version,
+      version                   = var.pm_version,
       volume_destination        = var.volume_destination,
       volume_source             = var.volume_source
   })
