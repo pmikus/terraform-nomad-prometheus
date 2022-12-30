@@ -174,7 +174,10 @@ job "${job_name}" {
       # https://www.nomadproject.io/docs/job-specification/artifact
       #
       artifact {
-        source = "${url}"
+        source = "${artifact_source}"
+        options {
+          checksum = "sha256:${artifact_source_checksum}"
+        }
       }
 
       # The "template" stanza instructs Nomad to manage a template, such as
@@ -303,38 +306,46 @@ rule_files:
 
 scrape_configs:
   - job_name: 'Nomad Cluster'
+    params:
+      format:
+      - prometheus
+    metrics_path: /v1/metrics
+    scheme: https
     consul_sd_configs:
-    - server: '{{ env "NOMAD_IP_prometheus" }}:8500'
-      services: [ 'nomad-client', 'nomad-server' ]
+    - server: {{ env "CONSUL_HTTP_ADDR" }}
+      services:
+      - nomad-client
+      - nomad-server
     relabel_configs:
     - source_labels: [__meta_consul_tags]
       regex: '(.*)http(.*)'
       action: keep
-    metrics_path: /v1/metrics
-    params:
-      format: [ 'prometheus' ]
-
   - job_name: 'Consul Cluster'
-    consul_sd_configs:
-    - server: '{{ env "NOMAD_IP_prometheus" }}:8500'
-      services: [ 'consul' ]
+    params:
+      format:
+      - prometheus
     metrics_path: /v1/agent/metrics
-    params:
-      format: [ 'prometheus' ]
-
+    scheme: http
+    static_configs:
+      - targets:
+        - {{ env "CONSUL_HTTP_ADDR" }}
   - job_name: 'Prometheus'
-    consul_sd_configs:
-    - server: '{{ env "NOMAD_IP_prometheus" }}:8500'
-      services: [ 'prometheus' ]
     params:
-      format: [ 'prometheus' ]
-
+      format:
+      - prometheus
+    scheme: http
+    consul_sd_configs:
+    - server: {{ env "CONSUL_HTTP_ADDR" }}
+      services:
+      - prometheus
   - job_name: 'Minio'
     bearer_token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwcm9tZXRoZXVzIiwic3ViIjoibWluaW8iLCJleHAiOjQ4MjU1OTQxNjN9.yMa4aSduURJQnKYXItA91PtUcHXKICyZ5dYVzojfAMKZ1wwRIpCilbJQyZKNQDnvrSmMyOgfVxmfhP3ISmuJ7w
-    consul_sd_configs:
-    - server: '{{ env "NOMAD_IP_prometheus" }}:8500'
-      services: [ 'minio' ]
     metrics_path: /minio/v2/metrics/cluster
+    scheme: http
+    consul_sd_configs:
+    - server: {{ env "CONSUL_HTTP_ADDR" }}
+      services:
+      - minio
 EOH
       }
 

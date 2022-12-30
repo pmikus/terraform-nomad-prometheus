@@ -108,6 +108,12 @@ variable "pm_version" {
   default     = "2.41.0"
 }
 
+variable "artifact_source_checksum" {
+  description = "Prometheus release checksum"
+  type        = string
+  default     = "9c1486f5f3e03d56433112594740ca84c6e59db061d096eeb3ea971ba25441c9"
+}
+
 variable "volume_destination" {
   description = "Specifies where the volume should be mounted inside the task"
   type        = string
