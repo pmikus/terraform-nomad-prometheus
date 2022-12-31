@@ -306,34 +306,43 @@ rule_files:
 
 scrape_configs:
   - job_name: 'Nomad Cluster'
+    honor_timestamps: true
     params:
       format:
       - prometheus
     metrics_path: /v1/metrics
     scheme: https
+    follow_redirects: true
+    enable_http2: true
     consul_sd_configs:
     - server: {{ env "CONSUL_HTTP_ADDR" }}
       services:
-      - nomad-client
       - nomad-server
+      - nomad-client
     relabel_configs:
     - source_labels: [__meta_consul_tags]
       regex: '(.*)http(.*)'
       action: keep
   - job_name: 'Consul Cluster'
+    honor_timestamps: true
     params:
       format:
       - prometheus
     metrics_path: /v1/agent/metrics
     scheme: http
+    follow_redirects: true
+    enable_http2: true
     static_configs:
       - targets:
         - {{ env "CONSUL_HTTP_ADDR" }}
   - job_name: 'Prometheus'
+    honor_timestamps: true
     params:
       format:
       - prometheus
     scheme: http
+    follow_redirects: true
+    enable_http2: true
     consul_sd_configs:
     - server: {{ env "CONSUL_HTTP_ADDR" }}
       services:
