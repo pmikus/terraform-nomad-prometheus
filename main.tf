@@ -33,8 +33,6 @@ resource "nomad_job" "nomad_job_prometheus" {
       use_vault_provider        = var.vault_secret.use_vault_provider,
       vault_kv_policy_name      = var.vault_secret.vault_kv_policy_name,
       vault_kv_path             = var.vault_secret.vault_kv_path,
-      vault_kv_field_access_key = var.vault_secret.vault_kv_field_access_key,
-      vault_kv_field_secret_key = var.vault_secret.vault_kv_field_secret_key,
       version                   = var.pm_version,
       volume_destination        = var.volume_destination,
       volume_source             = var.volume_source

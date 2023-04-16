@@ -149,7 +149,7 @@ job "${job_name}" {
 
       %{ if use_vault_provider }
       vault {
-        policies = "${vault_kv_policy_name}"
+        policies = [ "${vault_kv_policy_name}" ]
       }
       %{ endif }
 
@@ -188,31 +188,31 @@ job "${job_name}" {
       #
       template {
         data = <<EOH
-{{ with secret "pki/consul" "common_name=foo.service.consul" "ip_sans=127.0.0.1" }}
+{{ with secret "pki/issue/consul" "common_name=prometheus.service.consul" "ip_sans=127.0.0.1" }}
 {{- .Data.certificate -}}
 {{ end }}
 EOH
-        destination   = "${NOMAD_SECRETS_DIR}/certificate.crt"
+        destination   = "secrets/certificate.crt"
         change_mode   = "restart"
       }
 
       template {
         data = <<EOH
-{{ with secret "pki/consul" "common_name=prometheus.service.consul" "ip_sans=127.0.0.1" }}
+{{ with secret "pki/issue/consul" "common_name=prometheus.service.consul" "ip_sans=127.0.0.1" }}
 {{- .Data.issuing_ca -}}
 {{ end }}
 EOH
-        destination   = "${NOMAD_SECRETS_DIR}/ca.crt"
+        destination   = "secrets/ca.crt"
         change_mode   = "restart"
       }
 
       template {
         data = <<EOH
-{{ with secret "pki/consul" "common_name=prometheus.service.consul" "ip_sans=127.0.0.1" }}
+{{ with secret "pki/issue/consul" "common_name=prometheus.service.consul" "ip_sans=127.0.0.1" }}
 {{- .Data.private_key -}}
 {{ end }}
 EOH
-        destination   = "${NOMAD_SECRETS_DIR}/private_key.key"
+        destination   = "secrets/private_key.key"
         change_mode   = "restart"
       }
 
