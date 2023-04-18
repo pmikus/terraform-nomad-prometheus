@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.6 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.7 |
 | <a name="requirement_nomad"></a> [nomad](#requirement\_nomad) | >= 1.4.16 |
 
 ## Providers
@@ -20,33 +20,32 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [nomad_job.nomad_job_prometheus](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs/resources/job) | resource |
+| [nomad_job.this](https://registry.terraform.io/providers/hashicorp/nomad/latest/docs/resources/job) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_artifact_source_checksum"></a> [artifact\_source\_checksum](#input\_artifact\_source\_checksum) | Prometheus release checksum | `string` | `"9c1486f5f3e03d56433112594740ca84c6e59db061d096eeb3ea971ba25441c9"` | no |
-| <a name="input_auto_promote"></a> [auto\_promote](#input\_auto\_promote) | Specifies if the job should auto-promote to the canary version | `bool` | `true` | no |
-| <a name="input_auto_revert"></a> [auto\_revert](#input\_auto\_revert) | Specifies if the job should auto-revert to the last stable job | `bool` | `true` | no |
-| <a name="input_canary"></a> [canary](#input\_canary) | Equal to the count of the task group allows blue/green depl. | `number` | `1` | no |
-| <a name="input_constraint_value"></a> [constraint\_value](#input\_constraint\_value) | The constraint allows restricting the set of eligible nodes. | `string` | `"compute"` | no |
-| <a name="input_cpu"></a> [cpu](#input\_cpu) | CPU allocation | `number` | `500` | no |
-| <a name="input_data_dir"></a> [data\_dir](#input\_data\_dir) | Prometheus DISK allocation | `string` | `"/data"` | no |
-| <a name="input_datacenters"></a> [datacenters](#input\_datacenters) | Specifies the list of DCs to be considered placing this task | `list(string)` | <pre>[<br>  "dc1"<br>]</pre> | no |
-| <a name="input_group_count"></a> [group\_count](#input\_group\_count) | Specifies the number of the task groups running under this one | `number` | `1` | no |
-| <a name="input_job_name"></a> [job\_name](#input\_job\_name) | Specifies a name for the job | `string` | `"prometheus"` | no |
-| <a name="input_max_parallel"></a> [max\_parallel](#input\_max\_parallel) | Specifies the maximum number of updates to perform in parallel | `number` | `1` | no |
-| <a name="input_memory"></a> [memory](#input\_memory) | Specifies the memory required in MB | `number` | `256` | no |
-| <a name="input_pm_version"></a> [pm\_version](#input\_pm\_version) | Prometheus version | `string` | `"2.41.0"` | no |
-| <a name="input_port"></a> [port](#input\_port) | Specifies the static TCP/UDP port to allocate | `number` | `9090` | no |
-| <a name="input_region"></a> [region](#input\_region) | Specifies the list of DCs to be considered placing this task | `string` | `"global"` | no |
-| <a name="input_service_name"></a> [service\_name](#input\_service\_name) | Specifies the name this service will be advertised in Consul | `string` | `"prometheus"` | no |
-| <a name="input_use_canary"></a> [use\_canary](#input\_use\_canary) | Uses canary deployment | `bool` | `true` | no |
-| <a name="input_use_host_volume"></a> [use\_host\_volume](#input\_use\_host\_volume) | Use Nomad host volume feature | `bool` | `false` | no |
-| <a name="input_vault_secret"></a> [vault\_secret](#input\_vault\_secret) | Set of properties to be able to fetch secret from vault. | <pre>object({<br>    use_vault_provider        = bool,<br>    vault_kv_policy_name      = string,<br>    vault_kv_path             = string,<br>    vault_kv_field_access_key = string,<br>    vault_kv_field_secret_key = string<br>  })</pre> | <pre>{<br>  "use_vault_provider": false,<br>  "vault_kv_field_access_key": "access_key",<br>  "vault_kv_field_secret_key": "secret_key",<br>  "vault_kv_path": "secret/data/prometheus",<br>  "vault_kv_policy_name": "kv"<br>}</pre> | no |
-| <a name="input_volume_destination"></a> [volume\_destination](#input\_volume\_destination) | Specifies where the volume should be mounted inside the task | `string` | `"/local/"` | no |
-| <a name="input_volume_source"></a> [volume\_source](#input\_volume\_source) | The name of the volume to request | `string` | `"volume-prometheus"` | no |
+| <a name="input_job_artifact_source_checksum"></a> [job\_artifact\_source\_checksum](#input\_job\_artifact\_source\_checksum) | Prometheus release checksum. | `string` | n/a | yes |
+| <a name="input_job_auto_promote"></a> [job\_auto\_promote](#input\_job\_auto\_promote) | Specifies if the job should auto-promote to the canary version. | `bool` | `true` | no |
+| <a name="input_job_auto_revert"></a> [job\_auto\_revert](#input\_job\_auto\_revert) | Specifies if the job should auto-revert to the last stable job. | `bool` | `true` | no |
+| <a name="input_job_canary"></a> [job\_canary](#input\_job\_canary) | Equal to the count of the task group allows blue/green depl. | `number` | `1` | no |
+| <a name="input_job_constraint_value"></a> [job\_constraint\_value](#input\_job\_constraint\_value) | The constraint allows restricting the set of eligible nodes. | `string` | `"compute"` | no |
+| <a name="input_job_cpu"></a> [job\_cpu](#input\_job\_cpu) | CPU allocation. | `number` | `500` | no |
+| <a name="input_job_datacenters"></a> [job\_datacenters](#input\_job\_datacenters) | Specifies the list of DCs to be considered placing this task. | `list(string)` | <pre>[<br>  "dc1"<br>]</pre> | no |
+| <a name="input_job_group_count"></a> [job\_group\_count](#input\_job\_group\_count) | Specifies the number of the task groups running under this one. | `number` | `1` | no |
+| <a name="input_job_max_parallel"></a> [job\_max\_parallel](#input\_job\_max\_parallel) | Specifies the maximum number of updates to perform in parallel. | `number` | `1` | no |
+| <a name="input_job_memory"></a> [job\_memory](#input\_job\_memory) | Specifies the memory required in MB. | `number` | `256` | no |
+| <a name="input_job_name"></a> [job\_name](#input\_job\_name) | Specifies a name for the job. | `string` | `"prometheus"` | no |
+| <a name="input_job_port"></a> [job\_port](#input\_job\_port) | Specifies the static TCP/UDP port to allocate. | `number` | `9090` | no |
+| <a name="input_job_prometheus_version"></a> [job\_prometheus\_version](#input\_job\_prometheus\_version) | Prometheus version | `string` | n/a | yes |
+| <a name="input_job_region"></a> [job\_region](#input\_job\_region) | Specifies the region in which to execute the job. | `string` | `"global"` | no |
+| <a name="input_job_service_name"></a> [job\_service\_name](#input\_job\_service\_name) | Specifies the name this service will be advertised in Consul. | `string` | `"prometheus"` | no |
+| <a name="input_job_use_canary"></a> [job\_use\_canary](#input\_job\_use\_canary) | Uses canary deployment. | `bool` | `true` | no |
+| <a name="input_job_use_host_volume"></a> [job\_use\_host\_volume](#input\_job\_use\_host\_volume) | Use Nomad host volume feature. | `bool` | `false` | no |
+| <a name="input_job_vault_secret"></a> [job\_vault\_secret](#input\_job\_vault\_secret) | Set of properties to be able to fetch secret from vault. | <pre>object({<br>    use_vault_provider   = bool,<br>    vault_kv_policy_name = string<br>    vault_kv_path        = string<br>  })</pre> | <pre>{<br>  "use_vault_provider": true,<br>  "vault_kv_path": "pki/issue/consul",<br>  "vault_kv_policy_name": "nomad-cluster"<br>}</pre> | no |
+| <a name="input_job_volume_destination"></a> [job\_volume\_destination](#input\_job\_volume\_destination) | Specifies where the volume should be mounted inside the task | `string` | `"/local/"` | no |
+| <a name="input_job_volume_source"></a> [job\_volume\_source](#input\_job\_volume\_source) | The name of the volume to request | `string` | `"volume-prometheus"` | no |
 
 ## Outputs
 
